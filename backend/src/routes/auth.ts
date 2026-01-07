@@ -10,6 +10,7 @@ import verifyToken from "../middleware/auth.js";
 const router = express.Router();
 
 //Post as we're creating access token and a http cookie
+//api/auth/login
 router.post("/login", [
     check("email", "Email is required").isEmail(),
     check("password", "Password with 6 or more characters is required").isLength({
@@ -70,11 +71,13 @@ router.post("/login", [
 });
 
 //Get as we're getting information
+//api/auth/validate-token
 router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
     //Token was validated successfully
     res.status(200).send({userId: req.userId});
 });
 
+//api/auth/logout
 router.post("/logout", (req: Request, res: Response) => {
     //Replace token with new token that expires at the time of creation so we make it unvalid
     res.cookie("auth_token", "", {
