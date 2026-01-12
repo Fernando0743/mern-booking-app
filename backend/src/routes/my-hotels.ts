@@ -40,6 +40,7 @@ router.post(
         //Get images and text data
         const imageFiles = req.files as Express.Multer.File[];
         const newHotel: HotelType = req.body;
+        
 
         //Upload images to cloudinary (1 image at a time)
         const uploadPromises = imageFiles.map(async (image) => {
