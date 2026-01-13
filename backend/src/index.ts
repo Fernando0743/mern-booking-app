@@ -56,10 +56,15 @@ app.use("/api/my-hotels", myHotelRoutes);
 //This is  because some routes are behind conditional logic and won't be part of the static files declared on line 44 because
 //they're generated at request time
 //Client-side routing
-app.get('*', (req: Request, res: Response) => {
+
+
+
+//djvijdif
+app.use((req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
 });
 
+//fix
 app.listen(7000, () => {
     console.log("Sever is running on localhost:7000");
 });
