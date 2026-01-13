@@ -10,7 +10,7 @@ const verifyToken = (req, res, next) => {
     try {
         //Decode token with secret key to verify that the token was created by us
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        //Get user id
+        //Store userid
         req.userId = decoded.userId;
         next();
     }

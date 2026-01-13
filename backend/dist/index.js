@@ -8,6 +8,14 @@ import cookieParser from "cookie-parser";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+import myHotelRoutes from './routes/my-hotels.js';
+//Cloudinary configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 //Use mongoose and env variable to connect to mongo atlas cluster
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
 const __filename = fileURLToPath(import.meta.url);
@@ -31,6 +39,8 @@ app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 app.use("/api/auth", authRoutes);
 //Users related Routes
 app.use("/api/users", userRoutes);
+//My hotels related routes
+app.use("/api/my-hotels", myHotelRoutes);
 app.listen(7000, () => {
     console.log("Sever is running on localhost:7000");
 });

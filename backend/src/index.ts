@@ -52,6 +52,13 @@ app.use("/api/users", userRoutes);
 //My hotels related routes
 app.use("/api/my-hotels", myHotelRoutes);
 
+//Pass any request that are not api endpoints to let react router handle the routing of the request for us
+//This is  because some routes are behind conditional logic and won't be part of the static files declared on line 44 because
+//they're generated at request time
+app.get("*", (req: Request, res: Response) =>{
+    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'))
+})
+
 app.listen(7000, () => {
     console.log("Sever is running on localhost:7000");
 });
