@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from 'express'
 import multer from 'multer'
 import cloudinary from 'cloudinary'
-import type { HotelType } from '../models/hotel.js';
+import type { HotelType } from '../shared/types.js'
 import Hotel from '../models/hotel.js';
 import verifyToken from '../middleware/auth.js';
 import { body } from "express-validator";
@@ -80,5 +80,18 @@ router.post(
 
     }
 });
+
+
+//Get all hotels created by a specific user
+router.get("/", verifyToken, async (req: Request, res: Response) => {
+    try{
+         //Get all hotels created by a specific user
+        const hotels = await Hotel.find({userId : req.userId})
+        res.json(hotels)
+        
+    }catch(error){
+        res.status(500).json({ message: "Error fetching hotels" })
+    }
+})
 
 export default router;
