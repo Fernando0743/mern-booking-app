@@ -76,7 +76,7 @@ test("should allow user to add a hotel", async ({ page }) => {
     
 });
 
-test("should display hotels", async ( {page }) => {
+test("should display hotels", async ( { page }) => {
     //Go to my hotels page
     await page.goto(`${UI_URL}my-hotels`)
 
@@ -90,6 +90,35 @@ test("should display hotels", async ( {page }) => {
     await expect(page.getByText("2 Stars")).toBeVisible();
 
     //Assert buttons are on page
-    await expect(page.getByRole("link", { name: "View Details" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "View Details" }).first()).toBeVisible();
     await expect(page.getByRole("link", { name: "Add Hotel" })).toBeVisible();
+});
+
+test("should edit hotel", async ( { page }) => {
+    await page.goto(`${UI_URL}my-hotels`)
+
+    await page.getByRole("link", { name: "View Details" }).first().click();
+
+    //Wait for name parameter to load on page (Since we're using useEffect on frontend to load the hotel data and it takes time to be rendered)
+    await page.waitForSelector('[name="name"]', { state: "attached"})
+    //Verify we have correct hotel name
+    await expect(page.locator('[name="name"]')).toHaveValue("Dublin Getaways")
+    //Change hotel name
+    await page.locator('[name="name"]').fill("Dublin Getaways UPDATED")
+
+    //Click save button
+    await page.getByRole("button", { name: "Save"}).click();
+
+    await expect(page.getByText("Hotel Updated Successfully")).toBeVisible();
+
+    //Reset name data so tests doesn't fail everytime
+    //Reload page
+    await page.reload();
+
+    await expect(page.locator('[name="name"]')).toHaveValue("Dublin Getaways UPDATED")
+
+    await page.locator('[name="name"]').fill("Dublin Getaways")
+
+    //Click save button
+    await page.getByRole("button", { name: "Save"}).click();
 });

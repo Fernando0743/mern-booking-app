@@ -24,7 +24,7 @@ const AddHotel = () => {
         mutate(hotelFormData)
     }
 
-    return (<ManageHotelForm onSave={handleSave} isPending={isPending}/>)
+    return (<ManageHotelForm  onSave={handleSave} isPending={isPending} />)
 }
 
 export default AddHotel;
