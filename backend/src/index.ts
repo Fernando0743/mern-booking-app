@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import userRoutes from './routes/users.js'
 import authRoutes from './routes/auth.js'
 import cookieParser from "cookie-parser"
+import hotelRoutes from './routes/hotels.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -51,6 +52,9 @@ app.use("/api/users", userRoutes);
 
 //My hotels related routes
 app.use("/api/my-hotels", myHotelRoutes);
+
+//Search Related Routes
+app.use("/api/hotels", hotelRoutes);
 
 //Pass any request that are not api endpoints to let react router handle the routing of the request for us
 //This is  because some routes are behind conditional logic and won't be part of the static files declared on line 44 because

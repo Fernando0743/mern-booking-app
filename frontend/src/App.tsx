@@ -7,6 +7,7 @@ import AddHotel from './pages/AddHotel'
 import { useAppContext } from './contexts/AppContext'
 import MyHotels from './pages/MyHotels'
 import EditHotel from './pages/EditHotel'
+import Search from './pages/Search'
 
 function App() {
   const { isLoggedIn } = useAppContext();
@@ -30,7 +31,7 @@ function App() {
         path='/search'
         element={
         <Layout>
-          <p>Search Page</p>
+          <Search/>
         </Layout>
         } 
         />
@@ -52,6 +53,8 @@ function App() {
             </Layout>
           }
         />
+
+        
 
           {/*Logged in (or protected) routes */}
           { isLoggedIn && <>
