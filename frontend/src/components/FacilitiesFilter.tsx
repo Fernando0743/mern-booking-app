@@ -1,6 +1,6 @@
 import type { ChangeEvent } from "react";
-import { hotelFacilities, hotelTypes } from "../config/hotel-options-config";
-
+import { hotelFacilities } from "../config/hotel-options-config";
+//FIX
 type Props = {
     //Store all stars user selected
     selectedFacilities: string[];

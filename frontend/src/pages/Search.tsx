@@ -80,6 +80,8 @@ const Search = () => {
         )
     };
 
+
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
             {/*Filters Column. Sticky will sticks the div to the window as we scroll down*/}
@@ -130,6 +132,7 @@ const Search = () => {
                     <SearchResultsCard hotel={hotel} />
                 ))}
                 <div>
+                    {/*Pagination*/}
                     <Pagination
                     page={hotelData?.pagination.page || 1} 
                     pages={hotelData?.pagination.pages || 1} 
