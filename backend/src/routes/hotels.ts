@@ -23,8 +23,6 @@ router.get("/search", async(req: Request, res: Response) => {
             break;
         }
 
-
-
         //Add pagination when searching hotels
         const pageSize = 5;
         //Check if we have a page parameter (user clicked on page number), default is page number 1

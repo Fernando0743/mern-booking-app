@@ -62,7 +62,7 @@ const SearchResultsCard = ({hotel} : Props) => {
                         ))}
                         <span className="text-sm">
                             {hotel.facilities.length > 3 && 
-                                `+${hotel.facilities.length -3} more`}
+                                `+${hotel.facilities.length - 3} more`}
                         </span>
                     </div>
 
