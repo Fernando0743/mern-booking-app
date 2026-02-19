@@ -39,4 +39,20 @@ test("Should show hotel search results", async ( { page }) => {
     await expect(page.getByText("Hotels found in Dublin")).toBeVisible();
     await expect(page.getByText("Dublin Getaways")).toBeVisible();
 
+});
+
+test("should show hotel detail", async ( { page }) => {
+    await page.goto(UI_URL);
+
+    await page.getByPlaceholder("Where are you going?").fill("Dublin");
+    await page.getByRole("button", {name : "Search"}).click();  
+    
+    //Click to go to view details page
+    await page.getByText("Dublin Getaways").click();
+    //Assure url has '/detail/9480503943' using a regex
+    await expect(page).toHaveURL(/detail/);
+
+    //As we're signed in make sure that the button has text Book Now
+    await expect(page.getByRole("button", {name: "Book now"})).toBeVisible();
+
 })

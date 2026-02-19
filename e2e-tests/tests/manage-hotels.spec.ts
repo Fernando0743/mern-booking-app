@@ -102,9 +102,9 @@ test("should edit hotel", async ( { page }) => {
     //Wait for name parameter to load on page (Since we're using useEffect on frontend to load the hotel data and it takes time to be rendered)
     await page.waitForSelector('[name="name"]', { state: "attached"})
     //Verify we have correct hotel name
-    await expect(page.locator('[name="name"]')).toHaveValue("Dublin Getaways")
+    await expect(page.locator('[name="name"]')).toHaveValue("Test Hotel")
     //Change hotel name
-    await page.locator('[name="name"]').fill("Dublin Getaways UPDATED")
+    await page.locator('[name="name"]').fill("Test Hotel UPDATED")
 
     //Click save button
     await page.getByRole("button", { name: "Save"}).click();
@@ -115,9 +115,9 @@ test("should edit hotel", async ( { page }) => {
     //Reload page
     await page.reload();
 
-    await expect(page.locator('[name="name"]')).toHaveValue("Dublin Getaways UPDATED")
+    await expect(page.locator('[name="name"]')).toHaveValue("Test Hotel UPDATED")
 
-    await page.locator('[name="name"]').fill("Dublin Getaways")
+    await page.locator('[name="name"]').fill("Test Hotel")
 
     //Click save button
     await page.getByRole("button", { name: "Save"}).click();
