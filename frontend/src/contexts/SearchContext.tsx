@@ -28,12 +28,26 @@ type SearchContextProviderProps = {
 
 //We can thinks of SearchContextProvider as a react component where we can store states, use hooks, etc
 export const SearchContextProvider = ({children} : SearchContextProviderProps) => {
-    const [destination, setDestination] = useState<string>("");
-    const [checkIn, setCheckIn] = useState<Date>(new Date());
-    const [checkOut, setCheckOut] = useState<Date>(new Date());
-    const [adultCount, setAdultCount] = useState<number>(1);
-    const [childCount, setChildCount] = useState<number>(0);
-    const [hotelId, setHotelId] = useState<string>("");
+    //Check for items in session storage as default value to persist the search data as long as user has tab opened 
+    // (data will now persist if user refreshes tab)
+    const [destination, setDestination] = useState<string>(
+        () => sessionStorage.getItem("destination") || ""
+    );
+    const [checkIn, setCheckIn] = useState<Date>(
+        () => new Date(sessionStorage.getItem("checkIn") || new Date().toISOString())
+    );
+    const [checkOut, setCheckOut] = useState<Date>(
+        () => new Date(sessionStorage.getItem("checkOut") || new Date().toISOString())
+    );
+    const [adultCount, setAdultCount] = useState<number>(
+        () => parseInt(sessionStorage.getItem("adultCount") || "1")
+    );
+    const [childCount, setChildCount] = useState<number>(        
+        () => parseInt(sessionStorage.getItem("childCount") || "1")
+    );
+    const [hotelId, setHotelId] = useState<string>(
+        () => sessionStorage.getItem("hotelId") || "" 
+    );
 
     //Function that executes when user click Search Button
     const saveSearchValues = (
@@ -53,6 +67,17 @@ export const SearchContextProvider = ({children} : SearchContextProviderProps) =
         
         if(hotelId){
             setHotelId(hotelId);
+        }
+
+        //Save data to session storae
+        sessionStorage.setItem("destination", destination);
+        sessionStorage.setItem("checkIn", checkIn.toISOString());
+        sessionStorage.setItem("checkOut", checkOut.toISOString());
+        sessionStorage.setItem("adultCount", adultCount.toString());
+        sessionStorage.setItem("childCount", childCount.toString());
+
+        if(hotelId){
+            sessionStorage.setItem("hotelId", hotelId);
         }
     };
 
