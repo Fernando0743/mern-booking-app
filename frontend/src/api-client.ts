@@ -1,6 +1,7 @@
 import type { RegisterFormData } from "./pages/Register";
 import type { SignInFormData } from "./pages/SignIn";
-import type { HotelSearchResponse, HotelType, UserType } from "../../backend/src/shared/types"
+import type { HotelSearchResponse, HotelType, PaymentIntentResponse, UserType } from "../../backend/src/shared/types"
+import type { BookingFormData } from "./forms/BookingForm/BookingForm";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
@@ -200,4 +201,37 @@ export const fetchCurrentUser = async (): Promise<UserType> => {
     }
 
     return response.json();
+}
+
+//Function that creates payment intent
+export const createPaymentIntent = async (hotelId: string, numberOfNights: string) : Promise<PaymentIntentResponse> => {
+    const response = await fetch(`${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`, {
+        credentials: "include",
+        method: "POST",
+        body: JSON.stringify({ numberOfNights }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if(!response.ok){
+        throw new Error("Error fetching payment intent");
+    }
+
+    return response.json();
+}
+
+export const createRoomBooking = async(formData: BookingFormData) => {
+    const response = await fetch(`${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`, {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData)
+    });
+
+    if(!response.ok){
+        throw new Error("Error booking the room");
+    }
 }

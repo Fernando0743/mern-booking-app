@@ -2,6 +2,10 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 import Toast from "../components/Toast";
 import { useQuery } from "@tanstack/react-query";
 import * as apiClient from "../api-client"
+import { loadStripe, type Stripe } from "@stripe/stripe-js";
+
+
+const STRIPE_PUB_KEY = import.meta.env.VITE_STRIPE_PUB_KEY || ""
 
 type ToastMessage = {
     message: string,
@@ -11,10 +15,14 @@ type ToastMessage = {
 type AppContext = {
     showToast : (toastMessage: ToastMessage) => void;
     isLoggedIn: boolean;
+    stripePromise: Promise<Stripe | null>
 }
 
 //Create context with default value of undefined
 const AppContext = createContext<AppContext | undefined>(undefined)
+
+//Initialize Stripe
+const stripePromise = loadStripe(STRIPE_PUB_KEY);
 
 //We can thinks of AppContextProvider as a react component where we can store states, use hooks, etc
 export const AppContextProvider = ({
@@ -38,7 +46,8 @@ export const AppContextProvider = ({
                 setToast(toastMessage)
             },
             //If we have an error then user is not logged in or has invalid token, if we have no erros then user is logged in properly and has a valid token
-            isLoggedIn: !isError
+            isLoggedIn: !isError,
+            stripePromise
         }} >
 
             {toast && (

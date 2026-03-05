@@ -29,7 +29,7 @@ const BookingDetailsSummary = ({checkIn, checkOut, adultCount, childCount, numbe
                 </div>
                 <div>
                     Check-out
-                    <div className="font-bold">{checkIn.toDateString()}</div>
+                    <div className="font-bold">{checkOut.toDateString()}</div>
                 </div>
             </div>
 
