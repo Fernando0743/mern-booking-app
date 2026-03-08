@@ -59,6 +59,7 @@ test("should show hotel detail", async ( { page }) => {
 test("should book hotel", async( { page }) => {
     await page.goto(UI_URL);
 
+    //Fill search bar
     await page.getByPlaceholder("Where are you going?").fill("Dublin");
 
     const date = new Date();
@@ -68,7 +69,7 @@ test("should book hotel", async( { page }) => {
 
     await page.getByRole("button", {name : "Search"}).click();  
     
-    //Click to go to view details page
+    //Click to go to view hotel details page
     await page.getByText("Dublin Getaways").click();
 
     await page.getByRole("button", {name: "Book now"}).click();
@@ -84,6 +85,7 @@ test("should book hotel", async( { page }) => {
     await page.getByRole("button", { name: "Confirm Booking" }).click();
     await expect(page.getByText("Booking Saved!")).toBeVisible();
 
-
-
+    //Go to my bookings page and assert we have booking displayed
+    await page.getByRole("link", { name: "My Bookings"}).click();
+    await expect(page.getByText("Dublin Getaways")).toBeVisible();
 });

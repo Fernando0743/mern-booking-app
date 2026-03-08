@@ -11,6 +11,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { v2 as cloudinary } from 'cloudinary';
 import myHotelRoutes from './routes/my-hotels.js'
+import bookingRoutes from './routes/my-bookings.js'
 
 //Cloudinary configuration
 cloudinary.config({
@@ -55,6 +56,9 @@ app.use("/api/my-hotels", myHotelRoutes);
 
 //Search Related Routes
 app.use("/api/hotels", hotelRoutes);
+
+//My Bookings Related Routes
+app.use("/api/my-bookings", bookingRoutes);
 
 //Pass any request that are not api endpoints to let react router handle the routing of the request for us
 //This is  because some routes are behind conditional logic and won't be part of the static files declared on line 44 because
